@@ -1,0 +1,53 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Geocalc</title>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/manage.css' %}">
+</head>
+<body>
+	<div class="header">
+		<img src="{% static 'images/logo.png' %}" width="150px">
+		<h4>Добро пожаловать {{ first_name }} {{ last_name }}</h4>
+		<a href="/logout/" class="logout"><img src="{% static 'images/logout.png' %}" width="32px">Выйти</a>
+	</div>
+
+		<ul>
+			<h4>Проекты:</h4>
+		{% if project_list  %}
+			{% for project in project_list %}
+			    <li class="project-item">
+			    	<div class="box">
+			    		<a href="/edit_project/{{ project.id }}/" class="project-name">
+			    			<img src="{% static 'images/map.png' %}" width="32px">
+			    			{{ project.project_name }}
+			    		</a> 
+			    		<span>
+			    			<img src="{% static 'images/author.png' %}" width="32px">
+			    			{{ project.project_owner.first_name }} {{ project.project_owner.last_name }}
+			    		</span>
+			    		<span class="delete"><a href="/delete_project/{{ project.id }}/"><img src="{% static 'images/delete.png' %}" width="32px"></a></span>
+			    	</div>
+			    </li>
+			{% endfor %}
+		{% else %}
+		<li class="project-item">
+			<div class="box">
+				<img src="{% static 'images/empty.png' %}" width="32px">
+				У Вас ничего нет
+			</div>			
+		</li>
+		{% endif %}
+		<li class="project-item">
+			<div class="box">
+				<span>
+				<img src="{% static 'images/new.png' %}" width="32px">
+				<a href="/new_project/">Новый проект</a>
+				</span>
+			</div>
+		</li>		
+		</ul>
+		
+
+</body>
+</html>

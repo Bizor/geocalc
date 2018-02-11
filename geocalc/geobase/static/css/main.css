@@ -1,0 +1,47 @@
+.wrapper{
+	display: grid;
+	grid-template-columns: 1fr 1fr; 
+}
+
+#map{
+	height: 100vh;
+}
+
+#rightside{
+	text-align: center;
+	background-color: #ececec;
+}
+
+#pointtable{
+}
+
+.box{
+	box-shadow: 0 0 5px rgba(0,0,0,0.5);
+	margin: 10px;
+	padding: 5px;
+	background-color: white;
+}
+
+.points{
+	overflow-y: auto;
+	overflow-x: hidden;
+	height: 300px;
+	box-shadow: 0 0 5px rgba(0,0,0,0.5);
+	margin: 10px;
+	padding: 0px;
+	background-color: white;
+	font-size: 10px;
+}
+
+.point-item{
+	display: grid;
+	grid-template-columns: 1fr 2fr 2fr 2fr 2fr 2fr; 
+	list-style: none;
+	text-align: center;
+}
+
+.point-item span{
+	border-right: 1px solid #ececec;
+	border-bottom: 1px solid #ececec;
+	padding: 5px;
+}

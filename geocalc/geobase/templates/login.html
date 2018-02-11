@@ -1,0 +1,25 @@
+
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Авторизация</title>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}">
+</head>
+<body>
+	<div class="wrapper">
+		<div class="login">
+		    <form id="login-form" role="form" style="display: block;" action="/login/" method="post">
+		    	<img src="{% static 'images/logo.png' %}">
+		        {% csrf_token %}
+		        <div class="field">{{ loginform.username }}</div>
+		        <div class="field">{{ loginform.password }}</div>
+		        {% if login_error %}
+		        	<div class="errors">{{ login_error }}</div>
+		        {% endif %}
+		        <div class="field"><input class="auth-button"  type="submit" value="Войти" /></div>
+		    </form>
+	    </div>
+	</div>
+</body>
+</html>

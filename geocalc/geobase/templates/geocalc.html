@@ -1,0 +1,72 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Geo Calc</title>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC4LoZvFXDA-Tj6vjIQuYgipSbJEgRAk9U" async defer></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css"/>
+	<script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
+	<script src='https://unpkg.com/leaflet.gridlayer.googlemutant@latest/Leaflet.GoogleMutant.js'></script>
+</head>
+<body>
+	<div class="wrapper">
+		<div id="map"></div>
+		<div id="rightside">
+		<div id="pointtable">
+			<form id="projectform" name="projectform">
+			<div class="box">
+				<h4>Данные об объекте Автор: {{ project_owner }}</h4>
+				{% csrf_token %}
+				{{ ProjectForm.project_name }}
+				<input type="submit" value="Сохранить в базу">
+				<a href="/new_project/" class="logout"><img src="{% static 'images/new.png' %}" width="32px"></a>
+				<a href="/logout/" class="logout"><img src="{% static 'images/logout.png' %}" width="32px"></a>
+			</div>
+			</form>
+			<div class="box">
+				<h4>Выберите Систему координат</h4>
+				<select id="csset" onchange="saveTheme(this.value)">
+				  <option v-for="cs in cssets" :value="cs.id"><< cs.csname >></option>
+				</select>
+				<h4>Введите координату точки</h4>
+				<input id="point_name" type="text" placeholder="Название точки" required="Введите название точки">
+				<input id="north" type="text" placeholder="Координата X" required="Введите координату X">
+				<input id="east" type="text" placeholder="Координата Y" required="Введите координату Y">
+				<button v-on:click="addPointItem">Добавить</button>
+			</div>
+			<ul class="points">
+				<li class="point-item">
+					<span>Id</span>
+					<span>СК</span>
+					<span>North</span>
+					<span>East</span>
+					<span></span>
+					<span></span>
+				</li>
+				<li v-for="(point, index) in points" class="point-item" :id="index">
+					<span><< point.pointname >></span>
+					<span><< cssets[point.csid].csname >></span>  
+					<span><< point.X >> </span>
+					<span><< point.Y >></span> 
+					<button v-on:click="removePointItem(index)">Удалить</button>
+					<button v-on:click="zoomPointItem(index)">Увеличить</button>
+				</li>
+			</ul>
+		</div>
+		</div>
+	</div>
+
+	<script src="https://unpkg.com/vue"></script>
+	<script type="text/javascript" src="{% static 'js/geojs.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/base.js' %}"></script>
+	<script type="text/javascript">
+		var pointbase = {{ project_points|safe }};
+		var project_url = '{{ project_url }}';
+	</script>
+	<script type="text/javascript" src="{% static 'js/main.js' %}"></script>
+</body>
+</html>
